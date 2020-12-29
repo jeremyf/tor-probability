@@ -24,19 +24,28 @@ module Tor
       # @note I tested this using a coin toss universe distribution
       # (e.g. heads or tails)
       class SwnAidAnother
-        # @todo Provide ways for helers to vary in capability.
+        # @yield self
         #
-        # @param number [Integer] the number of helpers
-        #
-        # @param universe [Universe] the universe of possible dice
-        # results for each of the helpers
-        def initialize(number:, universe:)
-          @universe = universe
-          @helpers = (0...number).map do
-            Helper.new(universe: universe)
+        # @example
+        #   Tor::Probability::HelperPool::SwnAidAnother.new do
+        #     add(relative_modifier: -1, universe: a_universe)
+        #   end
+        def initialize(&block)
+          @helpers = []
+          if block_given?
+            instance_exec(&block)
           end
         end
         attr_reader :helpers
+
+        protected
+
+        # @param universe [Universe] the applicable universe for this
+        def add_helper(universe:, relative_modifier: 0)
+          @helpers << Helper.new(universe: universe, relative_modifier: relative_modifier)
+        end
+
+        public
 
         def count
           @helpers.count
