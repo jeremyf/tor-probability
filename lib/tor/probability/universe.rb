@@ -49,7 +49,7 @@ module Tor
 
       def initialize(label:, distribution:)
         @label = label
-        @distribution = distribution
+        @distribution = distribution.freeze
         @max = distribution.keys.max
         @size = distribution.values.sum.to_f
       end
