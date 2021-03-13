@@ -9,7 +9,7 @@ I wrote about these scenarios in a blog post titled <cite><a href="https://takeo
 <a></cite>.
 
 <details>
-<summary>Text sent to $stdout&hellip;</summary>
+<summary>Text sent to <code>$stdout</code>&hellip;</summary>
 
 ```
 | Mod Diff   | Dice | Helpers | Reroll | Rnd 0 | Rnd 1 | Rnd 2 | Rnd 3 | Rnd 4 | Rnd 5 |

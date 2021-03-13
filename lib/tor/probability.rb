@@ -3,16 +3,20 @@ require "tor/probability/universe"
 require "tor/probability/helper_pool"
 require "tor/probability/scenario"
 require "tor/probability/check"
+require "tor/probability/swn"
 
 module Tor
   module Probability
     class Error < StandardError; end
+    def self.swn_calculate_skill_check(modified_difficulty: 8, re_roll: false, dice_pool: :2d6, helper_pool: [])
+      Swn.calculate_skill_check(modified_difficulty: modified_difficulty, re_roll: re_roll, dice_pool: dice_pool, helper_pool: helper_pool)
+    end
 
     # @param output_filename [String] The filename in which this
     # script will dump the YAML file.
     #
     # @see https://takeonrules.com/2020/12/28/probability-of-stabilizing-the-dying-in-stars-without-number/
-    def self.swn_stabilization_scenarios(output_filename:)
+    def self.swn_stabilization_scenarios(output_filename:, modified_difficulty_range: (0..12))
       universe_2d6 = Universe.two_six_sided_dice
       universe_3d6 = Universe.three_six_sided_dice_keep_best_two
 
@@ -41,7 +45,7 @@ module Tor
       puts divider_template
 
       rows = []
-      (0..12).each do |modified_difficulty|
+      modified_difficulty_range.each do |modified_difficulty|
         [universe_2d6, universe_3d6].each do |universe|
           all_helpers.each do |helpers|
             [false, true].each do |reroll|

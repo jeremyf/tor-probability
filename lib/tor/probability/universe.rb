@@ -3,6 +3,15 @@ module Tor
     # This class encapsulates the probability calculations based on
     # the given :distribution.
     class Universe
+
+      def self.fetch(key:)
+        {
+          2d6: two_six_sided_dice,
+          3d6: three_six_sided_dice_keep_best_two,
+          4d6: four_six_sided_dice_keep_best_two
+        }.fetch(key)
+      end
+
       # Return a Universe object with a dice result distribution
       # of the sum of two six-sided dice.
       #
